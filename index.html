@@ -1,100 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>Will You Be My Valentine?</title>
 <style>
-body{
-  text-align:center;
-  font-family:Arial;
-  background-color:#ffe6f0;
-  overflow:hidden;
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #ffe6f0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
-img{
-  width:250px;
-  margin-top:40px;
-  cursor:pointer;
+
+img {
+  width: 400px; /* Increased size */
+  margin-top: 20px;
+  border-radius: 15px;
 }
-#heart{
-  font-size:80px;
-  display:none;
-  cursor:pointer;
+
+#heart {
+  font-size: 100px; /* Bigger heart */
+  cursor: pointer;
+  display: block; /* visible from the start */
+  margin: 20px auto;
+  animation: pop 0.5s ease-out forwards;
 }
-#questionPage, #yesPage{
-  display:none;
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
 }
-button{
-  padding:10px 20px;
-  font-size:18px;
-  margin:10px;
-  cursor:pointer;
+
+.page {
+  display: none;
+  padding: 20px;
 }
-.sad{
-  font-size:30px;
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.sad {
+  font-size: 30px;
+}
+
+video {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 </style>
 </head>
 <body>
 
-<!-- First Photo -->
-<img id="firstPhoto" src="photo1.jpg">
-
-<div id="heart">❤️</div>
-
-<!-- Question Page -->
-<div id="questionPage">
-<h1>Will You Be My Valentine?</h1>
-<button onclick="yesClicked()">Yes ❤️</button>
-<button id="noBtn" onclick="noClicked()">No 💔</button>
-<div id="sadEmojis"></div>
+<!-- Step 1: First Photo with Heart above -->
+<div id="step1" class="page" style="display:block;">
+  <div id="heart">❤️</div>
+  <img src="photo1.jpg" alt="Cute Valentine Photo">
 </div>
 
-<!-- Yes Page -->
-<div id="yesPage" style="display:none;">
-  <video autoplay loop muted width="100%">
+<!-- Step 2: Question -->
+<div id="step2" class="page">
+  <h1>Will You Be My Valentine?</h1>
+  <button id="yesBtn">Yes ❤️</button>
+  <button id="noBtn">No 💔</button>
+  <div id="sadEmojis"></div>
+</div>
+
+<!-- Step 3: Love Page -->
+<div id="step3" class="page">
+  <video autoplay loop muted>
     <source src="happy.mp4" type="video/mp4">
   </video>
   <h1>I LOVE YOU ❤️</h1>
-  <button onclick="showLetter()">Click for Surprise</button>
-
-  <div id="letter" style="display:none; margin-top:20px;">
-    <p>
-      प्रिय युनिशा,  
-      तिमी मेरो जीवनको सबैभन्दा सुन्दर उपहार हौ।  
-      तिम्रो मुस्कानले मेरो दिन उज्यालो बनाउँछ।  
-      म सधैं तिमीलाई माया गर्नेछु।  
-
-      – तिम्रो विवेक ❤️
-    </p>
-    <button onclick="showMore()">More to come ❤️</button>
-  </div>
-
-  <div id="more" style="display:none; margin-top:20px;">
-    <video controls width="100%">
-      <source src="surprise.mp4" type="video/mp4">
-    </video>
-  </div>
+  <button id="letterBtn">Click for Surprise</button>
 </div>
 
+<!-- Step 4: Letter -->
+<div id="step4" class="page">
+  <p>
+    प्रिय युनिशा,  
+    तिमी मेरो जीवनको सबैभन्दा सुन्दर उपहार हौ।  
+    तिम्रो मुस्कानले मेरो दिन उज्यालो बनाउँछ।  
+    म सधैं तिमीलाई माया गर्नेछु।  
+    – तिम्रो विवेक ❤️
+  </p>
+  <button id="moreBtn">More to come ❤️</button>
+</div>
+
+<!-- Step 5: Surprise Video -->
+<div id="step5" class="page">
+  <video controls>
+    <source src="surprise.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- Sad Music -->
 <audio id="sadMusic">
-<source src="sad.mp3" type="audio/mpeg">
+  <source src="sad.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 let noCount = 0;
-let messages = [
-"Are you sure? 😢",
-"Think again 😭",
-"Please don't say no 💔",
-"I'll be sad 🥺",
-"Really? 😞",
-"Last chance 😩",
-"Don't break my heart 💘",
-"I promise I'll treat you chocolates 🍫",
-"I'll cry 😭😭",
-"Final chance 😢"
+const messages = [
+  "Are you sure? 😢",
+  "Think again 😭",
+  "Please don't say no 💔",
+  "I'll be sad 🥺",
+  "Really? 😞",
+  "Last chance 😩",
+  "Don't break my heart 💘",
+  "I promise I'll treat you chocolates 🍫",
+  "I'll cry 😭😭",
+  "Final chance 😢"
 ];
 
-document.getElementById("firstPhoto").onclick = function(){
+// Step 1 → Heart → Step 2
+document.getElementById("heart").onclick = () => {
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+}
+
+// Step 2 buttons
+document.getElementById("noBtn").onclick = () => {
+  if (noCount < messages.length) {
+    document.getElementById("sadMusic").play();
+    document.getElementById("sadEmojis").innerHTML += "<div class='sad'>😢</div>";
+    document.getElementById("noBtn").innerText = messages[noCount];
+    noCount++;
+  } else {
+    document.getElementById("noBtn").disabled = true;
+    document.getElementById("noBtn").innerText = "💔 Too late!";
+  }
+}
+
+document.getElementById("yesBtn").onclick = () => {
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step3").style.display = "block";
+}
+
+// Step 3 → Letter
+document.getElementById("letterBtn").onclick = () => {
+  document.getElementById("step3").style.display = "none";
+  document.getElementById("step4").style.display = "block";
+}
+
+// Step 4 → Surprise Video
+document.getElementById("moreBtn").onclick = () => {
+  document.getElementById("step4").style.display = "none";
+  document.getElementById("step5").style.display = "block";
+}
+</script>
+
+</body>
+</html>
   document.getElementById("firstPhoto").style.display="none";
   document.getElementById("heart").style.display="block";
 }
