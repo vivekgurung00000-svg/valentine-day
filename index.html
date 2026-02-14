@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Will You Be My Valentine?</title>
+<style>
+body{
+  text-align:center;
+  font-family:Arial;
+  background-color:#ffe6f0;
+  overflow:hidden;
+}
+img{
+  width:250px;
+  margin-top:40px;
+  cursor:pointer;
+}
+#heart{
+  font-size:80px;
+  display:none;
+  cursor:pointer;
+}
+#questionPage, #yesPage{
+  display:none;
+}
+button{
+  padding:10px 20px;
+  font-size:18px;
+  margin:10px;
+  cursor:pointer;
+}
+.sad{
+  font-size:30px;
+}
+</style>
+</head>
+<body>
+
+<!-- First Photo -->
+<img id="firstPhoto" src="photo1.jpg">
+
+<div id="heart">❤️</div>
+
+<!-- Question Page -->
+<div id="questionPage">
+<h1>Will You Be My Valentine?</h1>
+<button onclick="yesClicked()">Yes ❤️</button>
+<button id="noBtn" onclick="noClicked()">No 💔</button>
+<div id="sadEmojis"></div>
+</div>
+
+<!-- Yes Page -->
+<div id="yesPage">
+<video autoplay loop muted width="100%">
+  <source src="happy.mp4" type="video/mp4">
+</video>
+<h1>I LOVE YOU ❤️</h1>
+<button onclick="showLetter()">Click for Surprise</button>
+<div id="letter" style="display:none;">
+<p>
+प्रिय युनिशा,  
+तिमी मेरो जीवनको सबैभन्दा सुन्दर उपहार हौ।  
+तिम्रो मुस्कानले मेरो दिन उज्यालो बनाउँछ।  
+म सधैं तिमीलाई माया गर्नेछु।  
+
+– तिम्रो विवेक ❤️
+</p>
+<button onclick="showMore()">More to come ❤️</button>
+</div>
+<div id="more" style="display:none;">
+<video controls width="100%">
+  <source src="surprise.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+
+<audio id="sadMusic">
+<source src="sad.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let noCount = 0;
+let messages = [
+"Are you sure? 😢",
+"Think again 😭",
+"Please don't say no 💔",
+"I'll be sad 🥺",
+"Really? 😞",
+"Last chance 😩",
+"Don't break my heart 💘",
+"I promise I'll treat you chocolates 🍫",
+"I'll cry 😭😭",
+"Final chance 😢"
+];
+
+document.getElementById("firstPhoto").onclick = function(){
+  document.getElementById("firstPhoto").style.display="none";
+  document.getElementById("heart").style.display="block";
+}
+
+document.getElementById("heart").onclick = function(){
+  document.getElementById("heart").style.display="none";
+  document.getElementById("questionPage").style.display="block";
+}
+
+function noClicked(){
+  if(noCount < 10){
+    document.getElementById("sadMusic").play();
+    document.getElementById("sadEmojis").innerHTML += "<div class='sad'>😢</div>";
+    document.getElementById("noBtn").innerText = messages[noCount];
+    noCount++;
+  }
+}
+
+function yesClicked(){
+  document.getElementById("questionPage").style.display="none";
+  document.getElementById("yesPage").style.display="block";
+}
+
+function showLetter(){
+  document.getElementById("letter").style.display="block";
+}
+
+function showMore(){
+  document.getElementById("more").style.display="block";
+}
+</script>
+
+</body>
+</html>
