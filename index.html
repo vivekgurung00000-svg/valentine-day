@@ -49,6 +49,36 @@ button{
 </div>
 
 <!-- Yes Page -->
+<div id="yesPage" style="display:none;">
+  <video autoplay loop muted width="100%">
+    <source src="happy.mp4" type="video/mp4">
+  </video>
+
+  <h1>I LOVE YOU ❤️</h1>
+  <button onclick="showLetter()">Click for Surprise</button>
+
+  <!-- Letter section -->
+  <div id="letter" style="display:none; margin-top:20px;">
+    <p>
+      प्रिय युनिशा,  
+      तिमी मेरो जीवनको सबैभन्दा सुन्दर उपहार हौ।  
+      तिम्रो मुस्कानले मेरो दिन उज्यालो बनाउँछ।  
+      म सधैं तिमीलाई माया गर्नेछु।  
+
+      – तिम्रो विवेक ❤️
+    </p>
+    <button onclick="showMore()">More to come ❤️</button>
+  </div>
+
+  <!-- Surprise video -->
+  <div id="more" style="display:none; margin-top:20px;">
+    <video controls width="100%">
+      <source src="surprise.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+
 <div id="yesPage">
 <video autoplay loop muted width="100%">
   <source src="happy.mp4" type="video/mp4">
@@ -116,13 +146,16 @@ function yesClicked(){
   document.getElementById("yesPage").style.display="block";
 }
 
-function showLetter(){
-  document.getElementById("letter").style.display="block";
+function showLetter() {
+  document.getElementById("letter").style.display = "block";
+  document.getElementById("letter").scrollIntoView({behavior: "smooth"});
 }
 
-function showMore(){
-  document.getElementById("more").style.display="block";
+function showMore() {
+  document.getElementById("more").style.display = "block";
+  document.getElementById("more").scrollIntoView({behavior: "smooth"});
 }
+
 </script>
 
 </body>
